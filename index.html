@@ -146,6 +146,10 @@ h1{
 .project-meta{text-align:right;color:var(--muted);font-size:9px;line-height:1.8}
 .project-hero-wrap{position:relative;width:100%;height:70vh;background:var(--panel);overflow:hidden}
 .project-hero{width:100%;height:100%;object-fit:cover;display:block}
+.project-hero-wrap.video-hero{height:auto;aspect-ratio:16/9}
+.project-video{display:block;width:100%;height:100%;border:0}
+.project-media-heading{grid-column:1/-1;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted);margin:18px 0 0}
+.project-media-slot{grid-column:1/-1;border:1px solid var(--line);padding:35px;color:var(--muted);font-size:11px}
 .project-hero-label{position:absolute;left:16px;bottom:14px;font-size:8px;letter-spacing:.12em;color:rgba(232,228,220,.72)}
 .project-body{display:grid;grid-template-columns:minmax(0,2fr) minmax(180px,1fr);gap:8vw;padding:45px 0 55px;border-bottom:1px solid var(--line)}
 .project-text{max-width:680px;color:var(--text);line-height:1.85;margin:0;font-family:var(--serif);font-size:22px}
@@ -292,7 +296,8 @@ h1{
     </div>
     <div class="project-hero-wrap">
       <img class="project-hero" id="modalHero" alt="">
-      <div class="project-hero-label">HERO / FILM + PHOTO</div>
+      <iframe class="project-video" id="modalVideo" title="Project trailer" hidden allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      <div class="project-hero-label" id="modalHeroLabel">HERO / FILM + PHOTO</div>
     </div>
     <div class="project-body">
       <div class="project-text" id="modalText"></div>
@@ -342,15 +347,17 @@ const projects={
   },
 
   porthcawl:{
-    title:"Porthcawl",
-    meta:"PERSONAL / FILM + PHOTO / WALES",
+    title:"Are We There Yet?",
+    meta:"PERSONAL / FILM",
     type:"personal",
-    hero:"https://www.visitwales.com/sites/visit/files/styles/o_herostandard_fullwidth_1x/public/media-library/2024-03/JBP_JackAbbott_VWalessurf2-8155.jpg.webp?itok=PbARnkbe",
-    description:"A personal project following a day around the Welsh coast. Surf, weather and place become the structure of the story, with stills and moving image treated as parts of the same visual diary.",
-    details:"Type: Personal project<br>Format: Film / Photography<br>Location: Welsh coast",
-    images:[
-      "https://www.zafiri.com/wp-content/uploads/2017/08/gower_llangennith_surf_wales-770x510.jpg",
-      "https://pecime.com.mx/wp-content/uploads/2019/10/Armond-Cohen-director-de-Souvenir-con-Sergio-Armstrong-el-director-de-fotograf%C3%ADa-1024x642.jpg"
+    video:"qQ9f2qv9m-E",
+    description:"",
+    details:"Trailer",
+    images:[],
+    mediaSections:[
+      {title:"SCREENSHOTS",items:[]},
+      {title:"PHOTOS",items:[]},
+      {title:"CLIPS",items:[]}
     ]
   },
 
@@ -420,6 +427,8 @@ const modal=document.getElementById('modal');
 const title=document.getElementById('modalTitle');
 const meta=document.getElementById('modalMeta');
 const hero=document.getElementById('modalHero');
+const video=document.getElementById('modalVideo');
+const heroLabel=document.getElementById('modalHeroLabel');
 const text=document.getElementById('modalText');
 const details=document.getElementById('modalDetails');
 const images=document.getElementById('modalImages');
@@ -427,7 +436,15 @@ const images=document.getElementById('modalImages');
 document.querySelectorAll('.card').forEach(card=>{
   card.addEventListener('click',()=>{
     const p=projects[card.dataset.project];
-    title.textContent=p.title; meta.textContent=p.meta; hero.src=p.hero; text.textContent=p.description;
+    title.textContent=p.title; meta.textContent=p.meta; text.textContent=p.description;
+    video.removeAttribute('src');
+    video.hidden=!p.video; hero.hidden=!!p.video;
+    hero.style.display=p.video?'none':'block';
+    video.style.display=p.video?'block':'none';
+    hero.parentElement.classList.toggle('video-hero',!!p.video);
+    heroLabel.style.display=p.video?'none':'block';
+    if(p.video){video.title=p.title+' trailer';video.src='https://www.youtube-nocookie.com/embed/'+p.video+'?rel=0';hero.removeAttribute('src');}
+    else{hero.src=p.hero;hero.alt=p.title;}
     details.innerHTML=p.details || "";
     images.innerHTML='';
     p.images.forEach((src,i)=>{
@@ -440,10 +457,17 @@ document.querySelectorAll('.card').forEach(card=>{
       if(i===2) img.classList.add('wide');
       images.appendChild(img);
     });
+    if(p.mediaSections){
+      p.mediaSections.forEach(section=>{
+        const heading=document.createElement('h3');heading.className='project-media-heading';heading.textContent=section.title;images.appendChild(heading);
+        if(!section.items.length){heading.remove();}
+      });
+    }
+    modal.scrollTop=0;
     modal.classList.add('open'); document.body.style.overflow='hidden';
   });
 });
-function closeModal(){modal.classList.remove('open');document.body.style.overflow=''}
+function closeModal(){video.removeAttribute('src');modal.classList.remove('open');document.body.style.overflow=''}
 document.getElementById('close').addEventListener('click',closeModal);
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 
