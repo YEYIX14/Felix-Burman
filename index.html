@@ -471,7 +471,7 @@ document.querySelectorAll('.card').forEach(card=>{
     hero.parentElement.classList.toggle('street-hero',card.dataset.project==='omh');
     images.classList.toggle('street-gallery',['omh','outdoors'].includes(card.dataset.project));
     hero.parentElement.classList.toggle('monster-hero',card.dataset.project==='outdoors');
-    heroLabel.style.display=(p.video||card.dataset.project==='omh')?'none':'block';
+    heroLabel.style.display='none';
     if(p.video){video.title=p.title+' trailer';video.src='https://www.youtube-nocookie.com/embed/'+p.video+'?rel=0';hero.removeAttribute('src');}
     else{hero.src=p.hero;hero.alt=p.title;}
     details.innerHTML=p.details || "";
