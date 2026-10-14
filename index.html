@@ -160,7 +160,6 @@ h1{
 .project-video{display:block;width:100%;height:100%;border:0}
 .project-media-heading{grid-column:1/-1;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted);margin:18px 0 0}
 .project-media-slot{grid-column:1/-1;border:1px solid var(--line);padding:35px;color:var(--muted);font-size:11px}
-.street-hero .project-hero-label{display:none}
 .project-hero-label{position:absolute;left:16px;bottom:14px;font-size:8px;letter-spacing:.12em;color:rgba(232,228,220,.72)}
 .project-body{display:grid;grid-template-columns:minmax(0,2fr) minmax(180px,1fr);gap:8vw;padding:45px 0 55px;border-bottom:1px solid var(--line)}
 .project-text{max-width:680px;color:var(--text);line-height:1.85;margin:0;font-family:var(--serif);font-size:22px}
@@ -472,7 +471,7 @@ document.querySelectorAll('.card').forEach(card=>{
     hero.parentElement.classList.toggle('street-hero',card.dataset.project==='omh');
     images.classList.toggle('street-gallery',['omh','outdoors'].includes(card.dataset.project));
     hero.parentElement.classList.toggle('monster-hero',card.dataset.project==='outdoors');
-    heroLabel.style.display=p.video?'none':'block';
+    heroLabel.style.display=(p.video||card.dataset.project==='omh')?'none':'block';
     if(p.video){video.title=p.title+' trailer';video.src='https://www.youtube-nocookie.com/embed/'+p.video+'?rel=0';hero.removeAttribute('src');}
     else{hero.src=p.hero;hero.alt=p.title;}
     details.innerHTML=p.details || "";
