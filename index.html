@@ -529,6 +529,44 @@ document.querySelectorAll('nav a').forEach(a=>{
   update();
 })();
 
+// Restrained drift inside project overlays, independent of the home scroll.
+(()=>{
+  const overlay=document.getElementById('modal');
+  const gallery=document.getElementById('modalImages');
+  const heroWrap=overlay.querySelector('.project-hero-wrap');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)');
+  let frame=0,layers=[];
+  const rebuild=()=>{
+    layers=[{el:heroWrap,rate:.045,current:0},...[...gallery.querySelectorAll('img')].map((el,i)=>({el,rate:i%2===0?.024:-.018,current:0}))];
+    layers.forEach(x=>x.el.style.translate='0 0');
+    update();
+  };
+  const tick=()=>{
+    frame=0;
+    const gentle=innerWidth<=800?.4:1;
+    const active=overlay.classList.contains('open')&&!reduce.matches;
+    let moving=false;
+    layers.forEach((x,i)=>{
+      const position=x.el.offsetTop-overlay.scrollTop;
+      const target=active?Math.max(-18,Math.min(18,(overlay.clientHeight*.5-position)*x.rate))*gentle:0;
+      x.current+=(target-x.current)*.14;
+      if(Math.abs(target-x.current)<.08)x.current=target;else moving=true;
+      x.el.style.translate='0 '+x.current.toFixed(2)+'px';
+    });
+    if(moving)frame=requestAnimationFrame(tick);
+  };
+  function update(){if(!frame)frame=requestAnimationFrame(tick);}
+  overlay.addEventListener('scroll',update,{passive:true});
+  addEventListener('resize',update,{passive:true});
+  reduce.addEventListener('change',()=>{
+    if(reduce.matches){cancelAnimationFrame(frame);frame=0;layers.forEach(x=>{x.current=0;x.el.style.translate='0 0';});}
+    else update();
+  });
+  new MutationObserver(rebuild).observe(gallery,{childList:true});
+  new MutationObserver(rebuild).observe(overlay,{attributes:true,attributeFilter:['class']});
+  rebuild();
+})();
+
 </script>
 </body>
 </html>
