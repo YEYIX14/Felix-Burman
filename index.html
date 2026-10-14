@@ -146,6 +146,9 @@ h1{
 .project-meta{text-align:right;color:var(--muted);font-size:9px;line-height:1.8}
 .project-hero-wrap{position:relative;width:100%;height:70vh;background:var(--panel);overflow:hidden}
 .project-hero{width:100%;height:100%;object-fit:cover;display:block}
+.project-hero-wrap.street-hero{height:auto;aspect-ratio:743/418}
+.project-images.street-gallery{grid-template-columns:repeat(auto-fit,minmax(150px,240px));align-items:start}
+.project-images.street-gallery img{height:auto;object-fit:contain}
 .project-hero-wrap.video-hero{height:auto;aspect-ratio:16/9}
 .project-video{display:block;width:100%;height:100%;border:0}
 .project-media-heading{grid-column:1/-1;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted);margin:18px 0 0}
@@ -365,12 +368,20 @@ const projects={
     title:"Street Photography",
     meta:"PERSONAL / PEOPLE / STYLE",
     type:"personal",
-    hero:"https://saturation.io/_next/image?q=75&url=https%3A%2F%2Fqgdsel5nethchfwk.public.blob.vercel-storage.com%2Fmedia%2Fryan-joseph-Eq_dtBylgoE-unsplash-15.jpg&w=828",
+    hero:"images/street/IMG_9281-hero.jpg",
     description:"A participatory media project exploring lived experience and mental health. The visual approach is deliberately human and direct, using documentary material alongside campaign-focused storytelling.",
     details:"Client: Open Mental Health<br>Format: Documentary / Campaign<br>Approach: Participatory media",
     images:[
-      "https://pecime.com.mx/wp-content/uploads/2019/10/Armond-Cohen-director-de-Souvenir-con-Sergio-Armstrong-el-director-de-fotograf%C3%ADa-1024x642.jpg",
-      "https://c02.purpledshub.com/uploads/sites/39/2025/06/FuelEXe_Social_Feed_2-scaled.jpg"
+      "images/street/IMG_3808.jpg",
+      "images/street/IMG_3890.jpg",
+      "images/street/IMG_3979.jpg",
+      "images/street/IMG_4489.jpg",
+      "images/street/IMG_5138.jpg",
+      "images/street/IMG_7786.jpg",
+      "images/street/IMG_8135.jpg",
+      "images/street/IMG_8453.jpg",
+      "images/street/IMG_8633.jpg",
+      "images/street/IMG_9478.jpg"
     ]
   },
 
@@ -442,6 +453,8 @@ document.querySelectorAll('.card').forEach(card=>{
     hero.style.display=p.video?'none':'block';
     video.style.display=p.video?'block':'none';
     hero.parentElement.classList.toggle('video-hero',!!p.video);
+    hero.parentElement.classList.toggle('street-hero',card.dataset.project==='omh');
+    images.classList.toggle('street-gallery',card.dataset.project==='omh');
     heroLabel.style.display=p.video?'none':'block';
     if(p.video){video.title=p.title+' trailer';video.src='https://www.youtube-nocookie.com/embed/'+p.video+'?rel=0';hero.removeAttribute('src');}
     else{hero.src=p.hero;hero.alt=p.title;}
@@ -454,7 +467,7 @@ document.querySelectorAll('.card').forEach(card=>{
         img.style.objectFit="cover";
         img.style.objectPosition="center 80%";
       }
-      if(i===2) img.classList.add('wide');
+      if(i===2 && card.dataset.project!=='omh') img.classList.add('wide');
       images.appendChild(img);
     });
     if(p.mediaSections){
