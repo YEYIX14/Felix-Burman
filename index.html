@@ -151,6 +151,8 @@ h1{
 .project-meta{text-align:right;color:var(--muted);font-size:9px;line-height:1.8}
 .project-hero-wrap{position:relative;width:100%;height:70vh;background:var(--panel);overflow:hidden}
 .project-hero{width:100%;height:100%;object-fit:cover;display:block}
+.project-hero-wrap.monster-hero{height:auto}
+.monster-hero .project-hero{height:auto;max-height:75vh;object-fit:contain}
 .project-hero-wrap.street-hero{height:auto;aspect-ratio:743/418}
 .project-images.street-gallery{grid-template-columns:repeat(auto-fit,minmax(150px,240px));align-items:start}
 .project-images.street-gallery img{height:auto;object-fit:contain}
@@ -394,12 +396,22 @@ const projects={
     title:"Outdoors",
     meta:"PERSONAL / PHOTOGRAPHY / UK",
     type:"personal",
-    hero:"https://leica-camera.com/sites/default/files/styles/meta_tag_image/public/2021-10/1_Intro_G-Danuser_2400x1350_reference.jpg?h=44b879e5&itok=Iy5J7hU5",
+    hero:"images/monster/IMG_9732-hero.jpg",
     description:"A collection of photographs made outdoors, focused on movement, texture and the relationship between riders and landscape.",
     details:"Type: Personal collection<br>Format: Photography<br>Subject: Outdoors + movement",
     images:[
-      "https://riderrave.com/static/images/posts/the-odyssey-of-cycling/7.jpg",
-      "https://www.zafiri.com/wp-content/uploads/2017/08/gower_llangennith_surf_wales-770x510.jpg"
+      "images/monster/IMG_0074.jpg",
+      "images/monster/IMG_0084.jpg",
+      "images/monster/IMG_0090.jpg",
+      "images/monster/IMG_9472.jpg",
+      "images/monster/IMG_9588.jpg",
+      "images/monster/IMG_9660.jpg",
+      "images/monster/IMG_9743.jpg",
+      "images/monster/IMG_9946.jpg",
+      "images/monster/hero image.jpg",
+      "images/monster/lone videographer.jpg",
+      "images/monster/money spread.jpg",
+      "images/monster/vibes.jpg"
     ]
   }
 };
@@ -459,7 +471,8 @@ document.querySelectorAll('.card').forEach(card=>{
     video.style.display=p.video?'block':'none';
     hero.parentElement.classList.toggle('video-hero',!!p.video);
     hero.parentElement.classList.toggle('street-hero',card.dataset.project==='omh');
-    images.classList.toggle('street-gallery',card.dataset.project==='omh');
+    images.classList.toggle('street-gallery',['omh','outdoors'].includes(card.dataset.project));
+    hero.parentElement.classList.toggle('monster-hero',card.dataset.project==='outdoors');
     heroLabel.style.display=p.video?'none':'block';
     if(p.video){video.title=p.title+' trailer';video.src='https://www.youtube-nocookie.com/embed/'+p.video+'?rel=0';hero.removeAttribute('src');}
     else{hero.src=p.hero;hero.alt=p.title;}
@@ -472,7 +485,7 @@ document.querySelectorAll('.card').forEach(card=>{
         img.style.objectFit="cover";
         img.style.objectPosition="center 80%";
       }
-      if(i===2 && card.dataset.project!=='omh') img.classList.add('wide');
+      if(i===2 && !['omh','outdoors'].includes(card.dataset.project)) img.classList.add('wide');
       images.appendChild(img);
     });
     if(p.mediaSections){
