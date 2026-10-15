@@ -157,10 +157,14 @@ h1{
 .project-images.street-gallery{grid-template-columns:repeat(auto-fit,minmax(150px,240px));align-items:start}
 .project-images.street-gallery img{height:auto;object-fit:contain}
 .project-hero-wrap.video-hero{height:auto;aspect-ratio:16/9}
-.project-videos{padding-top:28px;display:grid;grid-template-columns:repeat(var(--video-columns,2),minmax(0,1fr));gap:18px}
+.project-videos{padding-top:28px;display:grid;gap:36px}
 .project-videos[hidden]{display:none}
+.project-video-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:center}
+.project-video-row:nth-child(even) .project-clip{grid-column:2;grid-row:1}
+.project-video-row:nth-child(even) .project-video-context{grid-column:1;grid-row:1}
+.project-video-context{min-width:0;font-family:var(--serif);font-size:22px;line-height:1.85}
 .project-clip{width:100%;aspect-ratio:16/9;border:0;display:block;background:var(--panel)}
-@media(max-width:640px){.project-videos{grid-template-columns:1fr}}
+@media(max-width:640px){.project-video-row{grid-template-columns:1fr}.project-video-row:nth-child(even) .project-clip,.project-video-row:nth-child(even) .project-video-context{grid-column:auto;grid-row:auto}.project-video-context:empty{display:none}}
 .project-video{display:block;width:100%;height:100%;border:0}
 .project-media-heading{grid-column:1/-1;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted);margin:18px 0 0}
 .project-media-slot{grid-column:1/-1;border:1px solid var(--line);padding:35px;color:var(--muted);font-size:11px}
@@ -366,7 +370,7 @@ const projects={
     meta:"PERSONAL / FILM",
     type:"personal",
     video:"qQ9f2qv9m-E",
-    videos:["aGFmpW3ps5c"], // Add another YouTube video ID here for each new clip.
+    videos:["aGFmpW3ps5c","GsXW0ihGIhU"], // Add another YouTube video ID here for each new clip.
     description:"A trailer for a film shot on a roadtrip across America. Exploring the chaos and quiet of life on the road. Long drives, new places and good company come together to create a visual story about the journey being the whole point.",
     details:"Project: Are We There Yet?<br>Format: Film / Trailer<br>Location: USA<br>Year: 2026",
     images:[],
@@ -483,14 +487,15 @@ document.querySelectorAll('.card').forEach(card=>{
     else{hero.src=p.hero;hero.alt=p.title;}
     clips.replaceChildren();
     clips.hidden=!(p.videos&&p.videos.length);
-    clips.style.setProperty('--video-columns',Math.min(3,Math.max(2,(p.videos||[]).length)));
     (p.videos||[]).forEach((id,i)=>{
+      const row=document.createElement('div');row.className='project-video-row';
+      const context=document.createElement('div');context.className='project-video-context'; // Add this clip's context here when ready.
       const frame=document.createElement('iframe');
       frame.className='project-clip';frame.title=p.title+' video '+(i+1);
       frame.src='https://www.youtube-nocookie.com/embed/'+id+'?rel=0';
       frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
       frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';
-      clips.appendChild(frame);
+      row.append(frame,context);clips.appendChild(row);
     });
     details.innerHTML=p.details || "";
     images.innerHTML='';
