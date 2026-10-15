@@ -157,6 +157,10 @@ h1{
 .project-images.street-gallery{grid-template-columns:repeat(auto-fit,minmax(150px,240px));align-items:start}
 .project-images.street-gallery img{height:auto;object-fit:contain}
 .project-hero-wrap.video-hero{height:auto;aspect-ratio:16/9}
+.project-videos{padding-top:28px;display:grid;grid-template-columns:repeat(var(--video-columns,2),minmax(0,1fr));gap:18px}
+.project-videos[hidden]{display:none}
+.project-clip{width:100%;aspect-ratio:16/9;border:0;display:block;background:var(--panel)}
+@media(max-width:640px){.project-videos{grid-template-columns:1fr}}
 .project-video{display:block;width:100%;height:100%;border:0}
 .project-media-heading{grid-column:1/-1;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted);margin:18px 0 0}
 .project-media-slot{grid-column:1/-1;border:1px solid var(--line);padding:35px;color:var(--muted);font-size:11px}
@@ -309,6 +313,7 @@ h1{
       <iframe class="project-video" id="modalVideo" title="Project trailer" hidden allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
       <div class="project-hero-label" id="modalHeroLabel">HERO / FILM + PHOTO</div>
     </div>
+    <div class="project-videos" id="modalVideos" hidden></div>
     <div class="project-body">
       <div class="project-text" id="modalText"></div>
       <div class="project-details" id="modalDetails"></div>
@@ -361,6 +366,7 @@ const projects={
     meta:"PERSONAL / FILM",
     type:"personal",
     video:"qQ9f2qv9m-E",
+    videos:["aGFmpW3ps5c"], // Add another YouTube video ID here for each new clip.
     description:"A trailer for a film shot on a roadtrip across America. Exploring the chaos and quiet of life on the road. Long drives, new places and good company come together to create a visual story about the journey being the whole point.",
     details:"Project: Are We There Yet?<br>Format: Film / Trailer<br>Location: USA<br>Year: 2026",
     images:[],
@@ -458,6 +464,7 @@ const heroLabel=document.getElementById('modalHeroLabel');
 const text=document.getElementById('modalText');
 const details=document.getElementById('modalDetails');
 const images=document.getElementById('modalImages');
+const clips=document.getElementById('modalVideos');
 
 document.querySelectorAll('.card').forEach(card=>{
   card.addEventListener('click',()=>{
@@ -474,6 +481,17 @@ document.querySelectorAll('.card').forEach(card=>{
     heroLabel.style.display='none';
     if(p.video){video.title=p.title+' trailer';video.src='https://www.youtube-nocookie.com/embed/'+p.video+'?rel=0';hero.removeAttribute('src');}
     else{hero.src=p.hero;hero.alt=p.title;}
+    clips.replaceChildren();
+    clips.hidden=!(p.videos&&p.videos.length);
+    clips.style.setProperty('--video-columns',Math.min(3,Math.max(2,(p.videos||[]).length)));
+    (p.videos||[]).forEach((id,i)=>{
+      const frame=document.createElement('iframe');
+      frame.className='project-clip';frame.title=p.title+' video '+(i+1);
+      frame.src='https://www.youtube-nocookie.com/embed/'+id+'?rel=0';
+      frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';
+      clips.appendChild(frame);
+    });
     details.innerHTML=p.details || "";
     images.innerHTML='';
     p.images.forEach((src,i)=>{
@@ -496,7 +514,7 @@ document.querySelectorAll('.card').forEach(card=>{
     modal.classList.add('open'); document.body.style.overflow='hidden';
   });
 });
-function closeModal(){video.removeAttribute('src');modal.classList.remove('open');document.body.style.overflow=''}
+function closeModal(){clips.replaceChildren();clips.hidden=true;video.removeAttribute('src');modal.classList.remove('open');document.body.style.overflow=''}
 document.getElementById('close').addEventListener('click',closeModal);
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 
