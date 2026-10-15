@@ -471,18 +471,22 @@ const details=document.getElementById('modalDetails');
 const images=document.getElementById('modalImages');
 const clips=document.getElementById('modalVideos');
 
-document.querySelectorAll('.card').forEach(card=>{
-  card.addEventListener('click',()=>{
-    const p=projects[card.dataset.project];
+// Project URLs use ?project=project-key without reloading the page.
+let activeProject=null;
+function openProject(key){
+    if(!Object.prototype.hasOwnProperty.call(projects,key))return;
+    if(activeProject===key && modal.classList.contains('open'))return;
+    activeProject=key;
+    const p=projects[key];
     title.textContent=p.title; meta.textContent=p.meta; text.textContent=p.description;
     video.removeAttribute('src');
     video.hidden=!p.video; hero.hidden=!!p.video;
     hero.style.display=p.video?'none':'block';
     video.style.display=p.video?'block':'none';
     hero.parentElement.classList.toggle('video-hero',!!p.video);
-    hero.parentElement.classList.toggle('street-hero',card.dataset.project==='street-photography');
-    images.classList.toggle('street-gallery',['street-photography','monster-senders-club'].includes(card.dataset.project));
-    hero.parentElement.classList.toggle('monster-hero',card.dataset.project==='monster-senders-club');
+    hero.parentElement.classList.toggle('street-hero',key==='street-photography');
+    images.classList.toggle('street-gallery',['street-photography','monster-senders-club'].includes(key));
+    hero.parentElement.classList.toggle('monster-hero',key==='monster-senders-club');
     heroLabel.style.display='none';
     if(p.video){video.title=p.title+' trailer';video.src='https://www.youtube-nocookie.com/embed/'+p.video+'?rel=0';hero.removeAttribute('src');}
     else{hero.src=p.hero;hero.alt=p.title;}
@@ -503,11 +507,11 @@ document.querySelectorAll('.card').forEach(card=>{
     p.images.forEach((src,i)=>{
       const img=document.createElement('img'); img.src=src; img.alt=p.title+' image '+(i+1);
       
-      if(card.dataset.project==='purity' && i===0){
+      if(key==='purity' && i===0){
         img.style.objectFit="cover";
         img.style.objectPosition="center 80%";
       }
-      if(i===2 && !['street-photography','monster-senders-club'].includes(card.dataset.project)) img.classList.add('wide');
+      if(i===2 && !['street-photography','monster-senders-club'].includes(key)) img.classList.add('wide');
       images.appendChild(img);
     });
     if(p.mediaSections){
@@ -518,9 +522,42 @@ document.querySelectorAll('.card').forEach(card=>{
     }
     modal.scrollTop=0;
     modal.classList.add('open'); document.body.style.overflow='hidden';
+}
+function hideProject(){
+  clips.replaceChildren();clips.hidden=true;video.removeAttribute('src');
+  modal.classList.remove('open');document.body.style.overflow='';activeProject=null;
+}
+function projectFromUrl(){
+  const key=new URL(location.href).searchParams.get('project');
+  return Object.prototype.hasOwnProperty.call(projects,key)?key:null;
+}
+function syncProjectFromUrl(){
+  const key=projectFromUrl();
+  if(key)openProject(key);else hideProject();
+}
+function closeModal(){
+  if(!modal.classList.contains('open'))return;
+  hideProject();
+  if(history.state && history.state.portfolioProjectEntry){
+    history.back();
+  }else{
+    // A fresh deep link has no in-site entry to go back to. Stay on the site.
+    const url=new URL(location.href);url.searchParams.delete('project');
+    history.replaceState(history.state,'',url);
+  }
+}
+document.querySelectorAll('.card').forEach(card=>{
+  card.addEventListener('click',()=>{
+    const key=card.dataset.project;
+    if(!Object.prototype.hasOwnProperty.call(projects,key))return;
+    if(projectFromUrl()!==key){
+      const url=new URL(location.href);url.searchParams.set('project',key);
+      history.pushState({portfolioProjectEntry:true},'',url);
+    }
+    openProject(key);
   });
 });
-function closeModal(){clips.replaceChildren();clips.hidden=true;video.removeAttribute('src');modal.classList.remove('open');document.body.style.overflow=''}
+addEventListener('popstate',syncProjectFromUrl);
 document.getElementById('close').addEventListener('click',closeModal);
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 
@@ -607,6 +644,8 @@ document.querySelectorAll('nav a').forEach(a=>{
   rebuild();
 })();
 
+// Open a shared project URL after the page and overlay hooks are ready.
+syncProjectFromUrl();
 </script>
 </body>
 </html>
