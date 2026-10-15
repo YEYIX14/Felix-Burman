@@ -245,17 +245,17 @@ h1{
     </div>
   </div>
   <div class="gallery">
-    <article class="card" data-type="client" data-project="Purity">
+    <article class="card" data-type="client" data-project="purity">
       <div class="card-index">01</div><div class="corner"></div>
       <div class="card-media"><img src="images/purity images/purity hero.JPG" alt="Mountain biking"></div>
       <div class="card-info"><h3>Purity Winter Campaign</h3><span>PHOTO / CLIENT</span></div>
     </article>
-    <article class="card" data-type="personal" data-project="porthcawl">
+    <article class="card" data-type="personal" data-project="are-we-there-yet">
       <div class="card-index">02</div><div class="corner"></div>
       <div class="card-media"><img src="images/are we there yet photos/Screenshot 2026-09-22 at 09.52.57.png" alt="Surfing in Wales"></div>
       <div class="card-info"><h3>Are We There Yet?</h3><span>FILM / PERSONAL</span></div>
     </article>
-    <article class="card" data-type="personal" data-project="omh">
+    <article class="card" data-type="personal" data-project="street-photography">
       <div class="card-index">03</div><div class="corner"></div>
       <div class="card-media"><img src="images/Venice Images/hero image.JPG"
         style="object-position:center 70%;"
@@ -267,7 +267,7 @@ h1{
 
       </h3><span>PHOTO / PERSONAL</span></div>
     </article>
-    <article class="card" data-type="personal" data-project="outdoors">
+    <article class="card" data-type="personal" data-project="monster-senders-club">
       <div class="card-index">04</div><div class="corner"></div>
       <div class="card-media"><img src="images/Monster images/hero image.jpeg"
         style="object-position:center 70%;" 
@@ -342,7 +342,7 @@ h1{
    images      = additional images / BTS
    ============================================================ */
 const projects={
-  Purity:{
+  "purity":{
     title:"Purity Winter Campaign",
     meta:"CLIENT / PHOTO / BEER",
     type:"client",
@@ -365,7 +365,7 @@ const projects={
     ]
   },
 
-  porthcawl:{
+  "are-we-there-yet":{
     title:"Are We There Yet?",
     meta:"PERSONAL / FILM",
     type:"personal",
@@ -382,7 +382,7 @@ const projects={
     ]
   },
 
-  omh:{
+  "street-photography":{
     title:"Street Photography",
     meta:"PERSONAL / PEOPLE / STYLE",
     type:"personal",
@@ -403,7 +403,7 @@ const projects={
     ]
   },
 
-  outdoors:{
+  "monster-senders-club":{
     title:"Monster Senders Club",
     meta:"PERSONAL / PHOTOGRAPHY / UK",
     type:"personal",
@@ -453,9 +453,9 @@ Then add a gallery card with the same project key:
   </article>
 
 For your own files, use paths such as:
-  images/gcn-hero.jpg
-  images/gcn-bts-01.jpg
-  images/gcn-bts-02.jpg
+  images/purity images/purity hero.JPG
+  images/street/IMG_3808.jpg
+  images/monster/IMG_0074.jpg
 
 ============================================================
 */
@@ -480,9 +480,9 @@ document.querySelectorAll('.card').forEach(card=>{
     hero.style.display=p.video?'none':'block';
     video.style.display=p.video?'block':'none';
     hero.parentElement.classList.toggle('video-hero',!!p.video);
-    hero.parentElement.classList.toggle('street-hero',card.dataset.project==='omh');
-    images.classList.toggle('street-gallery',['omh','outdoors'].includes(card.dataset.project));
-    hero.parentElement.classList.toggle('monster-hero',card.dataset.project==='outdoors');
+    hero.parentElement.classList.toggle('street-hero',card.dataset.project==='street-photography');
+    images.classList.toggle('street-gallery',['street-photography','monster-senders-club'].includes(card.dataset.project));
+    hero.parentElement.classList.toggle('monster-hero',card.dataset.project==='monster-senders-club');
     heroLabel.style.display='none';
     if(p.video){video.title=p.title+' trailer';video.src='https://www.youtube-nocookie.com/embed/'+p.video+'?rel=0';hero.removeAttribute('src');}
     else{hero.src=p.hero;hero.alt=p.title;}
@@ -503,11 +503,11 @@ document.querySelectorAll('.card').forEach(card=>{
     p.images.forEach((src,i)=>{
       const img=document.createElement('img'); img.src=src; img.alt=p.title+' image '+(i+1);
       
-      if(p.title==="Purity Winter Campaign" && i===0){
+      if(card.dataset.project==='purity' && i===0){
         img.style.objectFit="cover";
         img.style.objectPosition="center 80%";
       }
-      if(i===2 && !['omh','outdoors'].includes(card.dataset.project)) img.classList.add('wide');
+      if(i===2 && !['street-photography','monster-senders-club'].includes(card.dataset.project)) img.classList.add('wide');
       images.appendChild(img);
     });
     if(p.mediaSections){
