@@ -1,0 +1,217 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Monster Senders Club | Felix Burman</title>
+<meta name="description" content="Monster Senders Club: mountain bike photography by Felix Burman, focused on riders, movement and outdoor landscapes in the UK.">
+<link rel="canonical" href="https://felixburman.com/projects/monster-senders-club/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Felix Burman">
+<meta property="og:title" content="Monster Senders Club | Felix Burman">
+<meta property="og:description" content="Monster Senders Club: mountain bike photography by Felix Burman, focused on riders, movement and outdoor landscapes in the UK.">
+<meta property="og:url" content="https://felixburman.com/projects/monster-senders-club/">
+<meta property="og:image" content="https://felixburman.com/images/monster/IMG_9732-hero-panorama.jpg">
+<meta property="og:image:alt" content="Film and photography by Felix Burman">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Monster Senders Club | Felix Burman">
+<meta name="twitter:description" content="Monster Senders Club: mountain bike photography by Felix Burman, focused on riders, movement and outdoor landscapes in the UK.">
+<meta name="twitter:image" content="https://felixburman.com/images/monster/IMG_9732-hero-panorama.jpg"><link rel="icon" href="/favicon.svg"><style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:wght@400;500&display=swap');
+
+:root{
+  --bg:#1b1c1c;
+  --panel:#202121;
+  --text:#e8e4dc;
+  --muted:#9b9891;
+  --line:#3a3a38;
+  --red:#e45147;
+  --serif:"Playfair Display", Georgia, serif;
+  --mono:"DM Mono", monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:var(--mono);font-size:12px;letter-spacing:.01em;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.site{min-height:100vh}
+header{
+  position:fixed;z-index:20;top:0;left:0;right:0;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:28px 38px;mix-blend-mode:normal;
+}
+.logo{
+  display:flex;align-items:center;gap:10px;font-weight:500;
+  letter-spacing:.12em;font-size:14px;
+}
+.dot{
+  width:7px;height:7px;border-radius:50%;background:var(--red);
+  animation:record 1.15s steps(1,end) infinite;
+}
+@keyframes record{0%,58%{opacity:1}59%,100%{opacity:.18}}
+nav{display:flex;gap:30px}
+nav a{font-size:10px;letter-spacing:.12em;opacity:.72;transition:opacity .2s}
+nav a:hover,nav a.active{opacity:1}
+
+/* HOME */
+section{min-height:100vh}
+#home{
+  position:relative;display:grid;grid-template-columns:0.35fr 1.65fr;
+  align-items:end;padding:120px 38px 38px;gap:5vw;
+}
+.home-copy{padding-bottom:5vh;position:relative;z-index:2}
+.eyebrow{font-size:9px;letter-spacing:.16em;color:var(--muted);margin-bottom:26px}
+h1{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(58px,8vw,122px);line-height:.91;
+  letter-spacing:-.045em;margin:0;max-width:760px;
+}
+.home-copy .small{
+  max-width:420px;color:var(--muted);line-height:1.7;margin-top:32px;
+  font-size:11px;
+}
+.home-visuals{
+  height:73vh;min-height:510px;display:grid;grid-template-columns:minmax(0,1fr) 108px;
+  gap:12px;align-items:stretch;
+
+}
+.home-image{height:100%;position:relative;overflow:hidden}
+.home-thumbs{display:flex;flex-direction:column;gap:12px;min-width:0}
+.home-thumb{position:relative;overflow:hidden;flex:1;background:var(--panel)}
+.home-thumb img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.72);transition:transform .5s ease}
+.home-thumb:hover img{transform:scale(1.045)}
+.home-image img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.72)}
+.home-image:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 65%,rgba(0,0,0,.28));
+}
+.frame{
+  position:absolute;z-index:3;left:18px;right:18px;top:18px;bottom:18px;
+  border:1px solid rgba(232,228,220,.24);pointer-events:none;
+}
+.frame:before,.frame:after{
+  content:"";position:absolute;width:28px;height:28px;
+  border-color:var(--text);border-style:solid;opacity:.7;
+}
+.frame:before{left:-1px;top:-1px;border-width:1px 0 0 1px}
+.frame:after{right:-1px;bottom:-1px;border-width:0 1px 1px 0}
+.time{
+  position:absolute;z-index:4;right:25px;top:25px;font-size:9px;
+  color:rgba(232,228,220,.65);letter-spacing:.08em;
+}
+.scroll{position:absolute;left:38px;bottom:39px;color:var(--muted);font-size:9px;letter-spacing:.12em}
+
+/* WORK */
+#work{padding:145px 38px 80px;min-height:auto}
+.section-head{display:flex;justify-content:space-between;align-items:end;border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:28px}
+.section-title{font-family:var(--serif);font-size:54px;letter-spacing:-.035em}
+.filters{display:flex;gap:18px}
+.filters button{font-size:9px;color:var(--muted);letter-spacing:.1em;padding:0 0 3px;border-bottom:1px solid transparent}
+.filters button.active,.filters button:hover{color:var(--text);border-color:var(--text)}
+.gallery{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;
+}
+.card{height:54vh;min-height:390px;overflow:hidden;position:relative;background:var(--panel)}
+.card.hidden{display:none}
+.card-media{
+  height:100%;position:relative;overflow:hidden;
+  transition:height .45s cubic-bezier(.2,.7,.2,1);
+}
+.card-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.card:hover .card-media{height:calc(100% - 52px)}
+.card:hover .card-media img{transform:scale(1.025)}
+.card-info{
+  height:52px;display:flex;justify-content:space-between;align-items:center;
+  padding:0 15px;background:var(--panel);position:absolute;left:0;right:0;bottom:0;
+  transform:translateY(100%);transition:transform .45s cubic-bezier(.2,.7,.2,1);
+}
+.card:hover .card-info{transform:translateY(0)}
+.card-info h3{font-family:var(--serif);font-size:22px;font-weight:400;margin:0}
+.card-info span{font-size:8px;color:var(--muted);letter-spacing:.1em}
+.card-index{position:absolute;top:13px;left:14px;z-index:3;font-size:8px;color:rgba(232,228,220,.7)}
+.card .corner{
+  position:absolute;right:14px;top:14px;z-index:3;width:14px;height:14px;
+  border-top:1px solid rgba(232,228,220,.65);border-right:1px solid rgba(232,228,220,.65);
+}
+
+/* ABOUT */
+#about{padding:150px 38px 90px;min-height:auto}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:10vw;align-items:start}
+.about-title{font-family:var(--serif);font-size:clamp(58px,8vw,118px);line-height:.88;letter-spacing:-.05em;margin:0}
+.about-copy{padding-top:15px;max-width:520px;color:var(--muted);line-height:1.8;font-size:19px ;position:relative;top:200px}
+.about-copy p{margin:0 0 24px}
+.about-photo{margin:70px 0 0 12px;max-width:430px;background:#e8e4dc;padding:14px 14px 30px;box-shadow:0 12px 30px rgba(0,0,0,.22);transform:rotate(-1.5deg);color:#292927}
+.about-photo img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
+.about-photo figcaption{font-family:var(--serif);font-size:14px;padding:12px 5px 0;color:#292927;letter-spacing:0;text-align:center}
+
+/* PROJECT MODAL */
+.modal{position:fixed;inset:0;background:rgba(27,28,28,.98);z-index:40;display:none;overflow:auto}
+.modal.open{display:block}
+.modal-inner{padding:110px 38px 60px;max-width:1400px;margin:auto}
+.close{position:fixed;z-index:50;top:28px;left:38px;right:auto;font-size:10px;letter-spacing:.12em;color:var(--muted)}
+.project-top{display:flex;justify-content:space-between;gap:40px;border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:30px}
+.project-title{font-family:var(--serif);font-size:clamp(54px,7vw,100px);font-weight:400;line-height:.9;margin:0}
+.project-meta{text-align:right;color:var(--muted);font-size:9px;line-height:1.8}
+.project-hero-wrap{position:relative;width:100%;height:70vh;background:var(--panel);overflow:hidden}
+.project-hero{width:100%;height:100%;object-fit:cover;display:block}
+.project-hero-wrap.monster-hero{height:auto}
+.monster-hero .project-hero{height:auto;object-fit:contain}
+.project-hero-wrap.street-hero{height:auto;aspect-ratio:743/418}
+.project-images.street-gallery{grid-template-columns:repeat(auto-fit,minmax(150px,240px));align-items:start}
+.project-images.street-gallery img{height:auto;object-fit:contain}
+.project-hero-wrap.video-hero{height:auto;aspect-ratio:16/9}
+.project-videos{padding-top:28px;display:grid;gap:36px}
+.project-videos[hidden]{display:none}
+.project-video-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:center}
+.project-video-row:nth-child(even) .project-clip{grid-column:2;grid-row:1}
+.project-video-row:nth-child(even) .project-video-context{grid-column:1;grid-row:1}
+.project-video-context{min-width:0;font-family:var(--serif);font-size:22px;line-height:1.85}
+.project-clip{width:100%;aspect-ratio:16/9;border:0;display:block;background:var(--panel)}
+@media(max-width:640px){.project-video-row{grid-template-columns:1fr}.project-video-row:nth-child(even) .project-clip,.project-video-row:nth-child(even) .project-video-context{grid-column:auto;grid-row:auto}.project-video-context:empty{display:none}}
+.project-video{display:block;width:100%;height:100%;border:0}
+.project-media-heading{grid-column:1/-1;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted);margin:18px 0 0}
+.project-media-slot{grid-column:1/-1;border:1px solid var(--line);padding:35px;color:var(--muted);font-size:11px}
+.project-hero-label{position:absolute;left:16px;bottom:14px;font-size:8px;letter-spacing:.12em;color:rgba(232,228,220,.72)}
+.project-body{display:grid;grid-template-columns:minmax(0,2fr) minmax(180px,1fr);gap:8vw;padding:45px 0 55px;border-bottom:1px solid var(--line)}
+.project-text{max-width:680px;color:var(--text);line-height:1.85;margin:0;font-family:var(--serif);font-size:22px}
+.project-details{color:var(--muted);font-size:9px;line-height:1.9;letter-spacing:.08em;text-transform:uppercase}
+.project-images{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding-top:28px}
+.project-images img{width:100%;height:55vh;object-fit:cover}
+.project-images img.wide{grid-column:1/-1;height:65vh}
+.project-images img:nth-child(n+4){
+  height:auto;
+  object-fit: initial;
+}
+
+/* CONTACT */
+#contact{min-height:70vh;padding:150px 38px 60px;border-top:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between}
+.contact-title{font-family:var(--serif);font-size:clamp(65px,10vw,150px);line-height:.85;letter-spacing:-.055em;margin:0}
+.contact-bottom{display:flex;justify-content:space-between;color:var(--muted)}
+.contact-bottom a:hover{color:var(--text)}
+
+@media(max-width:800px){
+  header{padding:22px 20px}nav{gap:15px}
+  #home{display:block;padding:120px 20px 25px}
+  .home-visuals{height:58vh;min-height:390px;margin-top:45px;grid-template-columns:minmax(0,1fr) 72px;gap:8px}
+  .scroll{left:20px}
+  #work,#about,#contact{padding-left:20px;padding-right:20px}
+  .section-head{display:block}.filters{margin-top:20px}
+  .gallery,.about-grid,.project-images{grid-template-columns:1fr}
+  .card{height:60vh}
+  .about-photo{margin-top:45px}
+  .project-body{grid-template-columns:1fr;gap:25px}
+  .project-images img,.project-images img.wide{height:55vh}
+  .project-top{display:block}.project-meta{text-align:left;margin-top:20px}
+  .close{left:20px;right:auto}
+}
+
+/* Contact links below About */
+.social-links{display:flex;gap:12px;margin-top:65px;padding-top:28px;border-top:1px solid var(--line)}.social{color:var(--text);display:flex;align-items:center;justify-content:space-between;gap:26px;min-height:70px;padding:17px 20px;border:1px solid var(--line);font-family:var(--mono);font-size:11px;line-height:1.6;transition:background .2s,color .2s,border-color .2s}.label{max-width:155px}.bottom{display:flex;align-items:center;gap:15px}.icon{width:20px;height:20px;flex-shrink:0;display:block}.arrow{font-size:15px}.social:hover,.social:focus-visible{background:var(--text);color:var(--bg);border-color:var(--text);outline:none}@media(max-width:800px){.about-copy{top:0;padding-top:0;font-size:16px}.social-links{margin-top:32px;padding-top:24px;flex-direction:column;gap:10px}.social{min-height:59px;padding:13px 17px;font-size:11px}.label{max-width:none}.about-photo{max-width:285px;margin-left:8px}.about-grid{gap:32px}}
+
+/* Keep social links directly below the About copy. */
+.about-copy .social-links{display:grid;grid-template-columns:1fr;margin-top:28px;padding-top:0;border-top:0;gap:10px}
+.about-copy .social{min-height:59px;padding:13px 17px;font-size:11px}
+.about-copy .label{max-width:none}
+
+.section-title{font-weight:400;margin:0}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+
+body{overflow:auto}.project-page{padding-top:110px}.project-title{font-size:clamp(54px,7vw,100px);max-width:none;letter-spacing:.01em}.project-nav{display:flex;flex-wrap:wrap;gap:24px;padding:40px 0;font-size:11px;color:var(--muted)}.project-nav a:hover{text-decoration:underline}</style><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Person", "@id": "https://felixburman.com/#felix-burman", "name": "Felix Burman", "url": "https://felixburman.com/", "jobTitle": "Filmmaker and photographer", "affiliation": {"@type": "CollegeOrUniversity", "name": "Bath Spa University"}, "sameAs": ["https://www.linkedin.com/in/felix-burman-a4301722b/", "https://www.instagram.com/flx_media_/"]}, {"@type": "CreativeWork", "name": "Monster Senders Club", "description": "A collection of photographs made outdoors, focused on movement, texture and the relationship between riders and landscape.", "url": "https://felixburman.com/projects/monster-senders-club/", "creator": {"@id": "https://felixburman.com/#felix-burman"}, "image": "https://felixburman.com/images/monster/IMG_9732-hero-panorama.jpg"}]}</script></head><body><a class="close" href="/#work" aria-label="Close project and return to selected work">CLOSE ×</a><main class="modal-inner project-page"><div class="project-top"><h1 class="project-title">Monster Senders Club</h1><div class="project-meta">PERSONAL / PHOTOGRAPHY / UK</div></div><div class="project-hero-wrap monster-hero"><img class="project-hero" src="/images/monster/IMG_9732-hero-panorama.jpg" alt="Monster Senders Club by Felix Burman"></div><div class="project-body"><p class="project-text">A collection of photographs made outdoors, focused on movement, texture and the relationship between riders and landscape.</p><div class="project-details">Type: Personal collection<br>Format: Mountain Bike Photography<br>Subject: Outdoors + movement</div></div><div class="project-images street-gallery"><img loading="lazy" src="/images/monster/IMG_0074.jpg" alt="Monster Senders Club - IMG_0074"><img loading="lazy" src="/images/monster/IMG_0084.jpg" alt="Monster Senders Club - IMG_0084"><img loading="lazy" src="/images/monster/IMG_9472.jpg" alt="Monster Senders Club - IMG_9472"><img loading="lazy" src="/images/monster/IMG_9588.jpg" alt="Monster Senders Club - IMG_9588"><img loading="lazy" src="/images/monster/IMG_9660.jpg" alt="Monster Senders Club - IMG_9660"><img loading="lazy" src="/images/monster/IMG_9743.jpg" alt="Monster Senders Club - IMG_9743"><img loading="lazy" src="/images/monster/hero image.jpg" alt="Monster Senders Club - hero image"><img loading="lazy" src="/images/monster/lone videographer.jpg" alt="Monster Senders Club - lone videographer"><img loading="lazy" src="/images/monster/money spread.jpg" alt="Monster Senders Club - money spread"><img loading="lazy" src="/images/monster/vibes.jpg" alt="Monster Senders Club - vibes"></div><p style="color:var(--muted);font-size:11px;line-height:1.8;margin-top:32px">Film and photography by Felix Burman, a Bath Spa University student.</p><nav class="project-nav" aria-label="Other projects"><a href="/projects/purity/">Purity Winter Campaign</a><a href="/projects/are-we-there-yet/">Are We There Yet?</a><a href="/projects/street-photography/">Street Photography</a></nav></main><script data-goatcounter="https://felixburman.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script></body></html>
