@@ -460,6 +460,23 @@ For your own files, use paths such as:
 ============================================================
 */
 
+// Count the home page and project views, without unrelated query parameters.
+window.goatcounter={no_onload:true};
+let analyticsLastPath=null;
+const analyticsPending=[];
+function flushAnalyticsViews(){
+  if(!window.goatcounter || typeof window.goatcounter.count!=='function')return;
+  while(analyticsPending.length)window.goatcounter.count(analyticsPending.shift());
+}
+function countPortfolioView(){
+  const key=projectFromUrl();
+  const path=location.pathname+(key?'?project='+encodeURIComponent(key):'');
+  if(path===analyticsLastPath)return;
+  analyticsLastPath=path;
+  analyticsPending.push({path,title:key?projects[key].title:document.title});
+  flushAnalyticsViews();
+}
+
 const modal=document.getElementById('modal');
 const title=document.getElementById('modalTitle');
 const meta=document.getElementById('modalMeta');
@@ -534,6 +551,7 @@ function projectFromUrl(){
 function syncProjectFromUrl(){
   const key=projectFromUrl();
   if(key)openProject(key);else hideProject();
+  countPortfolioView();
 }
 function closeModal(){
   if(!modal.classList.contains('open'))return;
@@ -544,6 +562,7 @@ function closeModal(){
     // A fresh deep link has no in-site entry to go back to. Stay on the site.
     const url=new URL(location.href);url.searchParams.delete('project');
     history.replaceState(history.state,'',url);
+    countPortfolioView();
   }
 }
 document.querySelectorAll('.card').forEach(card=>{
@@ -555,6 +574,7 @@ document.querySelectorAll('.card').forEach(card=>{
       history.pushState({portfolioProjectEntry:true},'',url);
     }
     openProject(key);
+    countPortfolioView();
   });
 });
 addEventListener('popstate',syncProjectFromUrl);
@@ -647,5 +667,6 @@ document.querySelectorAll('nav a').forEach(a=>{
 // Open a shared project URL after the page and overlay hooks are ready.
 syncProjectFromUrl();
 </script>
+<script data-goatcounter="https://felixburman.goatcounter.com/count" async src="https://gc.zgo.at/count.js" onload="flushAnalyticsViews()"></script>
 </body>
 </html>
